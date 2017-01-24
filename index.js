@@ -21,7 +21,7 @@ var readFile = promise.denodeify(fs.readFile);
  *
  * a list of schemas of the Qlik Sense QRS API
  *
- * 10.0.4.0 ⇒ 3.1.0.0
+ * 10.0.4 ⇒ 3.1.0
  *
  * @module qlik-api-qrs-schemas
  * @typicalname schemas
@@ -31,7 +31,7 @@ var readFile = promise.denodeify(fs.readFile);
  *
  * @example
  * ```javascript
- * var schema = require('qlik-api-qrs-schemas')('10.0.4.0');
+ * var schema = require('qlik-api-qrs-schemas')('10.0.4');
  * ```
  */
 module.exports = function(version) {
