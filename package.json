@@ -1,10 +1,10 @@
 {
   "name": "qlik-api-qrs-schemas",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "a list of schemas of the Qlik Sense QRS API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "mocha && istanbul cover node_modules/mocha/bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,26 @@
   },
   "homepage": "https://github.com/pouc/qlik-api-qrs-schemas#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-things": "^0.2.0",
+    "coveralls": "^2.11.15",
     "grunt": "^1.0.1",
     "grunt-bump": "^0.8.0",
-    "grunt-shell": "^2.1.0"
+    "grunt-coveralls": "^1.0.1",
+    "grunt-jscs": "^3.0.1",
+    "grunt-jsdoc-to-markdown": "^2.0.0",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "grunt-shell": "^2.1.0",
+    "grunt-simple-mocha": "^0.4.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.2.0",
+    "q": "^1.4.1",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "q": "^1.4.1"
   }
 }
