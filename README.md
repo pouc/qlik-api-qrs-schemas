@@ -14,4 +14,4 @@ a list of schemas of the Qlik Sense QRS API
 **License**: MIT Licensed  
 
 ### Versions
-10.0.4.0 ⇒ 3.1
+10.0.4.0 ⇒ 3.1.0.0
