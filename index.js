@@ -38,7 +38,7 @@ module.exports = function(version) {
 
     if (version === 'latest') {
 
-        return readdir('./schemas/**/*.json').then((files) => {
+        return readdir(path.join(__dirname, 'schemas/**/*.json')).then((files) => {
 
             return module.exports(
                 files
@@ -51,7 +51,7 @@ module.exports = function(version) {
 
     } else {
 
-        return readFile(`./schemas/${version}.json`).then((schema) => {
+        return readFile(path.join(__dirname, `schemas/${version}.json`)).then((schema) => {
             return JSON.parse(schema);
         });
 
