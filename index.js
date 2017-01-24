@@ -36,8 +36,8 @@ var readFile = promise.denodeify(fs.readFile);
  */
 module.exports = function(version) {
 
-    if(version === 'latest') {
-        
+    if (version === 'latest') {
+
         return readdir('./schemas/**/*.json').then((files) => {
 
             return module.exports(
@@ -46,9 +46,9 @@ module.exports = function(version) {
                     .filter(version => semver.valid(version) !== null)
                     .sort(semver.rcompare)[0]
             );
-   
-        })
-        
+
+        });
+
     } else {
 
         return readFile(`./schemas/${version}.json`).then((schema) => {
