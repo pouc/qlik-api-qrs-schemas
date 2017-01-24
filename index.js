@@ -1,8 +1,12 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
+var glob = require('glob');
 var promise = require('q');
+var semver = require('semver');
 
+var readdir = promise.denodeify(glob);
 var readFile = promise.denodeify(fs.readFile);
 
 /**
@@ -32,8 +36,25 @@ var readFile = promise.denodeify(fs.readFile);
  */
 module.exports = function(version) {
 
-    return readFile(`./schemas/${version}.json`).then((schema) => {
-        return JSON.parse(schema);
-    });
+    if(version === 'latest') {
+        
+        return readdir('./schemas/**/*.json').then((files) => {
+
+            return module.exports(
+                files
+                    .map(file => path.basename(file, '.json'))
+                    .filter(version => semver.valid(version) !== null)
+                    .sort(semver.rcompare)[0]
+            );
+   
+        })
+        
+    } else {
+
+        return readFile(`./schemas/${version}.json`).then((schema) => {
+            return JSON.parse(schema);
+        });
+
+    }
 
 };
