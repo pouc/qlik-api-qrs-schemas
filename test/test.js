@@ -65,5 +65,40 @@ describe('schema...', function() {
         }).catch(done);
 
 	});
+    
+    describe('default', function() {
+        
+        it('should be defined', function(done) {
+
+            exports('latest').then((schema) => {
+                check(done, () => {
+                    expect(schema.default).to.not.be.undefined;
+                    expect(schema.default).to.be.a('function');
+                });
+            }).catch(done);
+
+        });
+
+        it('should return default values', function(done) {
+
+            exports('latest').then((schema) => {
+                check(done, () => {
+                    expect(() => schema.default('toto')).to.throw(TypeError, 'Unknown type');
+                    expect(schema.default('App')).to.be.a('object').to.have.property('id').to.equal('00000000-0000-0000-0000-000000000000');
+                    
+                    expect(schema.default('guid')).to.be.a('object').to.have.property('guid').to.equal('00000000-0000-0000-0000-000000000000');
+                    expect(schema.default('GUID')).to.be.a('object').to.have.property('guid').to.equal('00000000-0000-0000-0000-000000000000');
+                    
+                    expect(schema.default('int')).to.be.a('object').to.have.property('int').to.equal(0);
+                    expect(schema.default('boolean')).to.be.a('object').to.have.property('boolean').to.equal(false);
+                    expect(schema.default('void')).to.be.null;
+                    expect(schema.default('array.<guid>')).to.be.a('array').to.deep.equal([{guid:'00000000-0000-0000-0000-000000000000'}]);
+                    
+                });
+            }).catch(done);
+
+        });
+
+    });
 
 });

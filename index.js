@@ -9,6 +9,8 @@ var semver = require('semver');
 var readdir = promise.denodeify(glob);
 var readFile = promise.denodeify(fs.readFile);
 
+var undef = require('ifnotundef');
+
 /**
  *
  * [![GitHub version](https://badge.fury.io/gh/pouc%2Fqlik-api-qrs-schemas.svg)](https://badge.fury.io/gh/pouc%2Fqlik-api-qrs-schemas)
@@ -52,9 +54,32 @@ module.exports = function(version) {
     } else {
 
         return readFile(path.join(__dirname, `schemas/${version}.json`)).then((schema) => {
-            return JSON.parse(schema);
+            var retVal = JSON.parse(schema);
+            retVal.default = (type) => defaultType(retVal.types, type);
+            return retVal;
         });
 
     }
 
 };
+
+function defaultType(types, type) {
+
+    if (undef.check(types, type)) {
+        return types[type];
+    } else {
+        if (type.toLowerCase() === 'guid') {
+            return {guid: '00000000-0000-0000-0000-000000000000'};
+        } else if (type.toLowerCase() === 'int') {
+            return {int: 0};
+        } else if (type.toLowerCase() === 'boolean') {
+            return {boolean: false};
+        } else if (type.toLowerCase() === 'void') {
+            return null;
+        } else if (type.match(/Array\.<.+>/i)) {
+            return [defaultType(types, type.match(/Array\.<(.+)>/i)[1])];
+        } else {
+            throw new TypeError(`Unknown type: ${type}`);
+        }
+    }
+}

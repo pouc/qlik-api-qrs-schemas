@@ -1,6 +1,6 @@
 {
   "name": "qlik-api-qrs-schemas",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "a list of schemas of the Qlik Sense QRS API",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "glob": "^7.1.1",
+    "ifnotundef": "^1.0.18",
     "q": "^1.4.1",
     "semver": "^5.3.0"
   }
