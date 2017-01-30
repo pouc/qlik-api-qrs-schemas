@@ -86,13 +86,13 @@ describe('schema...', function() {
                     expect(() => schema.default('toto')).to.throw(TypeError, 'Unknown type');
                     expect(schema.default('App')).to.be.a('object').to.have.property('id').to.equal('00000000-0000-0000-0000-000000000000');
                     
-                    expect(schema.default('guid')).to.be.a('object').to.have.property('guid').to.equal('00000000-0000-0000-0000-000000000000');
-                    expect(schema.default('GUID')).to.be.a('object').to.have.property('guid').to.equal('00000000-0000-0000-0000-000000000000');
+                    expect(schema.default('guid')).to.be.a('string').to.equal('00000000-0000-0000-0000-000000000000');
+                    expect(schema.default('GUID')).to.be.a('string').to.equal('00000000-0000-0000-0000-000000000000');
                     
-                    expect(schema.default('int')).to.be.a('object').to.have.property('int').to.equal(0);
-                    expect(schema.default('boolean')).to.be.a('object').to.have.property('boolean').to.equal(false);
+                    expect(schema.default('int')).to.be.a('number').to.equal(0);
+                    expect(schema.default('boolean')).to.be.a('boolean').to.equal(false);
                     expect(schema.default('void')).to.be.null;
-                    expect(schema.default('array.<guid>')).to.be.a('array').to.deep.equal([{guid:'00000000-0000-0000-0000-000000000000'}]);
+                    expect(schema.default('array.<guid>')).to.be.a('array').to.deep.equal(['00000000-0000-0000-0000-000000000000']);
                     
                 });
             }).catch(done);

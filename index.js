@@ -69,11 +69,11 @@ function defaultType(types, type) {
         return types[type];
     } else {
         if (type.toLowerCase() === 'guid') {
-            return {guid: '00000000-0000-0000-0000-000000000000'};
+            return '00000000-0000-0000-0000-000000000000';
         } else if (type.toLowerCase() === 'int') {
-            return {int: 0};
+            return 0;
         } else if (type.toLowerCase() === 'boolean') {
-            return {boolean: false};
+            return false;
         } else if (type.toLowerCase() === 'void') {
             return null;
         } else if (type.match(/Array\.<.+>/i)) {
