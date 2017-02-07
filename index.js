@@ -7,7 +7,10 @@ var promise = require('q');
 var semver = require('semver');
 
 var readdir = promise.denodeify(glob);
+var readdirSync = glob.sync;
+
 var readFile = promise.denodeify(fs.readFile);
+var readFileSync = fs.readFileSync;
 
 var undef = require('ifnotundef');
 
@@ -62,6 +65,26 @@ module.exports = function(version) {
     }
 
 };
+
+function sync(version) {
+    if (version === 'latest') {
+
+        return sync(
+            readdirSync(path.join(__dirname, 'schemas/**/*.json')).map(file => path.basename(file, '.json'))
+                .filter(version => semver.valid(version) !== null)
+                .sort(semver.rcompare)[0]
+        );
+
+    } else {
+
+        var retVal = JSON.parse(readFileSync(path.join(__dirname, `schemas/${version}.json`)));
+        retVal.default = (type) => defaultType(retVal.types, type);
+        return retVal;
+
+    }
+}
+
+module.exports.sync = sync;
 
 function defaultType(types, type) {
 

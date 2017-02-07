@@ -102,3 +102,62 @@ describe('schema...', function() {
     });
 
 });
+
+describe('schema sync...', function() {
+
+	it('should be defined', function() {
+		expect(exports.sync).to.not.be.undefined;
+        expect(exports.sync).to.be.a('function');
+	});
+    
+    it('should read 10.0.4 schema json files', function() {
+        
+        var schema = exports.sync('10.0.4');
+        expect(schema).to.be.a('object');
+        expect(schema).to.have.property('qrs').to.be.a('object');
+        expect(schema).to.have.property('types').to.be.a('object');
+        expect(schema).to.have.property('relations').to.be.a('array');
+        expect(schema).to.have.property('enums').to.be.a('object');
+
+	});
+    
+    it('should read latest schema json files', function() {
+        
+        var schema = exports.sync('latest');
+        expect(schema).to.be.a('object');
+        expect(schema).to.have.property('qrs').to.be.a('object');
+        expect(schema).to.have.property('types').to.be.a('object');
+        expect(schema).to.have.property('relations').to.be.a('array');
+        expect(schema).to.have.property('enums').to.be.a('object');
+
+	});
+    
+    describe('default', function() {
+        
+        it('should be defined', function() {
+
+            var schema = exports.sync('latest');
+            expect(schema.default).to.not.be.undefined;
+            expect(schema.default).to.be.a('function');
+
+        });
+
+        it('should return default values', function() {
+
+            var schema = exports.sync('latest');
+            expect(() => schema.default('toto')).to.throw(TypeError, 'Unknown type');
+            expect(schema.default('App')).to.be.a('object').to.have.property('id').to.equal('00000000-0000-0000-0000-000000000000');
+            
+            expect(schema.default('guid')).to.be.a('string').to.equal('00000000-0000-0000-0000-000000000000');
+            expect(schema.default('GUID')).to.be.a('string').to.equal('00000000-0000-0000-0000-000000000000');
+            
+            expect(schema.default('int')).to.be.a('number').to.equal(0);
+            expect(schema.default('boolean')).to.be.a('boolean').to.equal(false);
+            expect(schema.default('void')).to.be.null;
+            expect(schema.default('array.<guid>')).to.be.a('array').to.deep.equal(['00000000-0000-0000-0000-000000000000']);
+
+        });
+
+    });
+
+});
